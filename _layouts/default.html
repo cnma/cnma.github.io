@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.layout != 'index' %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/style.css' }}">
+</head>
+
+<body>
+    <header class="header">
+        <a href="{{ '/' }}"><img class="header-logo" src="{{ '/assets/logo.svg' }}"></a>
+    </header>
+    <main class="main">
+        {{ content }}
+    </main>
+    <footer class="footer">
+        {% assign default_paths = site.pages | map: "path" %}
+        {% assign page_paths = site.header_pages | default: default_paths %}
+        <div class="footer-links">[
+        {% for path in page_paths %}
+        {% assign my_page = site.pages | where: "path", path | first %}
+        {% if my_page.title %}
+        <a href="{{ my_page.url }}">{{ my_page.title | escape }}</a>,
+        {% endif %}
+        {% endfor %}
+        <a href="{{ '/' }}">Home</a>
+        ]</div>
+        <span class="footer-copy">Kevin Ma &copy; 2019</span>
+    </footer>
+</body>
+
+</html>
